@@ -24,8 +24,9 @@ const Read = () => {
                     {allData.posts && allData.posts.map((s) => (
                         <div key={Date.now() * Math.random()}>
                             <h1>{s.authorName}</h1>
+                            <p>{s.timestamp}</p>
                             <h3>{s.postBody}</h3>
-                            <img src={s.imageField}/>
+                            <img src={s.imageField} style={{width:"500px"}}/>
                         </div>
                     ))}
                 </Row>

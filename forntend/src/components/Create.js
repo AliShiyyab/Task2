@@ -16,7 +16,7 @@ export default function Create() {
             await axios.post('http://localhost:5000/add-post', {
                 authorName,
                 postBody,
-                imageField
+                imageField,
             })
         } catch (e) {
             console.log(e)
@@ -43,7 +43,6 @@ export default function Create() {
                     <Form.Control type="text" placeholder="Image Link"
                                   onChange={(even) => setImageField(even.target.value)}/>
                 </Form.Group>
-
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
