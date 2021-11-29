@@ -3,21 +3,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Form} from "react-bootstrap";
 import axios from 'axios';
 
-export default function Create() {
+export default function Create({setAllData}) {
 
     const [postBody, setPostBody] = useState('');
     const [authorName, setAuthorName] = useState('');
-    const [imageField, setImageField] = useState('');
+    const [imageField, setImageField] = useState('https://ichef.bbci.co.uk/news/976/cpsprodpb/8097/production/_121591923_gettyimages-175818908.jpg');
 
 
     const postData = async (e) => {
         e.preventDefault()
         try {
-            await axios.post('http://localhost:5000/add-post', {
+            const res = await axios.post('http://localhost:5000/add-post', {
                 authorName,
                 postBody,
                 imageField,
             })
+            console.log('POST', res.data)
+            setAllData(prev => [res.data.post, ...prev])
         } catch (e) {
             console.log(e)
         }
