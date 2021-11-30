@@ -17,6 +17,7 @@ const Read = ({allData, setAllData}) => {
                         <Post post={post} key={post.id} setPostBody={setPostBody}
                               setAuthorName={setAuthorName}
                               setAllData={setAllData}
+                              allData={allData}
                         />
                     ))}
                 </Row>

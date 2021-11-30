@@ -1,18 +1,22 @@
 import React, {useState} from 'react';
-import {Button, Card, Col} from "react-bootstrap";
-import {EditText, EditTextarea} from "react-edit-text";
+import {Button, Card, Col, Form, InputGroup} from "react-bootstrap";
 import axios from "axios";
 import EdiText from 'react-editext';
+import data from "bootstrap/js/src/dom/data";
+import {EditText} from "react-edit-text";
 
 
-const Post = ({post, setAuthorName, setPostBody, setAllData}) => {
+const Post = ({post, setAllData}) => {
 
-    //save new data
-    const [updatedPost , setUpdatedPost] = useState({
-        newAuthor: post.authorName,
-        newPostBody: post.postBody
+    // const [newAuthorName, setNewAuthorName] = useState(post.authorName);
+    // const [newPostBody, setNewPostBody] = useState(post.postBody);
+    // const [newImage, setNewImage] = useState(post.imageField);
+
+    const [updateValue, setUpdateValue] = useState({
+        authorName: post.authorName,
+        postBody: post.postBody,
+        imageField: post.imageField
     })
-
 
     //Delete functions.
     const deletePost = async (index) => {
@@ -25,9 +29,17 @@ const Post = ({post, setAuthorName, setPostBody, setAllData}) => {
         }
     }
 
-    const onSave = (val) =>{
-        console.log('Edit Value: ', val);
+
+    const onChangeHandler = (e) => {
+        e.preventDefault()
+        setUpdateValue({...updateValue, [e.target.name]: e.target.value})
     }
+
+    const updatePost = async () => {
+        const res = await axios.put(`http://localhost:5000/update_post_author/${post.id}`, updateValue);
+        console.log(res.data)
+    }
+
 
     return (
 
@@ -35,18 +47,29 @@ const Post = ({post, setAuthorName, setPostBody, setAllData}) => {
             <Card style={{width: '18rem'}}>
                 <img src={post.imageField} style={{width: "100%", height: "200px"}}/>
                 <Card.Body>
-                    {/*onChange={(e) => (setUpdatedPost({...updatedPost, newAuthor: e.target.value}))}
-                    value={`Author Name: ${updatedPost.newAuthor}`}*/}
-                    <EdiText type={"text"} value={`Author Name: ${post.authorName}`} onSave={onSave}/>
-                    {/* onChange={(e) => (setUpdatedPost({...updatedPost, newPostBody: e.target.value}))}
-                     value={`Body: ${updatedPost.newPostBody}`}*/}
-                    <EdiText  type={"text"} value={`Post Body: ${post.postBody}`} onSave={onSave}/>
-                    <Card.Text>
-                        Time: {post.timestamp}
-                    </Card.Text>
+                    <Form>
+                        <Card.Text>
+                                <Form.Control
+                                    type={"text"}
+                                    name={"authorName"}
+                                    value={updateValue.authorName}
+                                    onChange={onChangeHandler}
+                                />
+                        </Card.Text>
+                        <Card.Text>
+                            <Form.Control
+                                type="text"
+                                name={"postBody"}
+                                value={updateValue.postBody}
+                                onChange={onChangeHandler}
+                            />
+                        </Card.Text>
+                        <Card.Text>
+                            Time: {post.timestamp}
+                        </Card.Text>
+                    </Form>
                     <Button variant="danger" onClick={() => deletePost(post.id)}>Delete</Button>
-                    {/*<Button variant="warning" onClick={() => update_post(post.id)}*/}
-                    {/*        style={{marginLeft: "6rem"}}>Post</Button>*/}
+                    <Button variant="warning" style={{marginLeft: "5rem"}} onClick={updatePost}>Update</Button>
                 </Card.Body>
             </Card>
         </Col>

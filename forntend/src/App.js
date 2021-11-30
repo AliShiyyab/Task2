@@ -21,13 +21,6 @@ function App() {
         console.log(allData)
     }, [allData])
 
-    // //Delete functions.
-    // const deletePost = async (index) => {
-    //     const id = index;
-    //     const filterPosts = await axios.delete(`http://localhost:5000/delete_post/${id}`);
-    //     await setAllData({"posts": filterPosts.data});
-    // }
-
     return (
         <>
             <Container>

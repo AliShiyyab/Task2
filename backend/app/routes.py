@@ -35,12 +35,12 @@ def delete_post(id):
     return jsonify({"messages": "Deleted Successfully"})
 
 
-@app.route("/update_post/<int:id>", methods=['PUT'])
+@app.route("/update_post_author/<int:id>", methods=['PUT'])
 @cross_origin()
 def update_post(id):
     # post_to_update = Post.query.get_or_404(id)
     data = request.get_json()
-    post = Post.query.get_or_404(id)
+    post = Post.query.filter_by(id=id).first()
     post.authorName = data["authorName"]
     post.postBody = data["postBody"]
     db.session.add(post)
