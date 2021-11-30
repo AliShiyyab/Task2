@@ -12,6 +12,8 @@
     "react-bootstrap": "^2.0.2",
     "react-dom": "^17.0.2",
     "react-easy-edit": "^1.15.0",
+    "react-edit-text": "^4.2.0",
+    "react-editext": "^4.2.1",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"
@@ -39,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-edit-text": "^4.0.1"
   }
 }

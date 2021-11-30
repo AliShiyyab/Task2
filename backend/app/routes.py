@@ -1,10 +1,12 @@
 import requests
 
 from app import app, db
-from flask_cors import cross_origin
+from flask_cors import cross_origin, CORS
 from app.models import Post
 from flask import jsonify, request
 from datetime import datetime
+
+cors = CORS(app)
 
 
 @app.route("/posts")
@@ -38,13 +40,9 @@ def delete_post(id):
 def update_post(id):
     # post_to_update = Post.query.get_or_404(id)
     data = request.get_json()
-    post = Post.query.filter_by(id=id).first()
-    if not post:
-        return 'error message', 404
-    else:
-        post.authorName = data['authorName']
-        post.postBody = data['postBody']
-        post.imageField = data['imageField']
+    post = Post.query.get_or_404(id)
+    post.authorName = data["authorName"]
+    post.postBody = data["postBody"]
     db.session.add(post)
     db.session.commit()
     return jsonify({"messages": "Updated Successfully"})
