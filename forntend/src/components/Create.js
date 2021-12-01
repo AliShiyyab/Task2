@@ -13,13 +13,18 @@ export default function Create({setAllData}) {
     const postData = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post('http://localhost:5000/add-post', {
-                authorName,
-                postBody,
-                imageField,
-            })
-            console.log('POST', res.data)
-            setAllData(prev => [res.data.post, ...prev])
+            if (authorName.length > 0 && postBody.length > 0) {
+                const res = await axios.post('http://localhost:5000/add-post', {
+                    authorName,
+                    postBody,
+                    imageField,
+                })
+                console.log('POST', res.data)
+                setAllData(prev => [res.data.post, ...prev])
+            }
+            else{
+                alert("One of AuthorName or Post Body is Empty, Please check it.")
+            }
         } catch (e) {
             console.log(e)
         }

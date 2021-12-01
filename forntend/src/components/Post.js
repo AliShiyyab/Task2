@@ -1,16 +1,9 @@
 import React, {useState} from 'react';
-import {Button, Card, Col, Form, InputGroup} from "react-bootstrap";
+import {Button, Card, Col, Form} from "react-bootstrap";
 import axios from "axios";
-import EdiText from 'react-editext';
-import data from "bootstrap/js/src/dom/data";
-import {EditText} from "react-edit-text";
 
 
 const Post = ({post, setAllData}) => {
-
-    // const [newAuthorName, setNewAuthorName] = useState(post.authorName);
-    // const [newPostBody, setNewPostBody] = useState(post.postBody);
-    // const [newImage, setNewImage] = useState(post.imageField);
 
     const [updateValue, setUpdateValue] = useState({
         authorName: post.authorName,
@@ -30,8 +23,8 @@ const Post = ({post, setAllData}) => {
     }
 
 
+    //update data in form
     const onChangeHandler = (e) => {
-        e.preventDefault()
         setUpdateValue({...updateValue, [e.target.name]: e.target.value})
     }
 
@@ -43,21 +36,22 @@ const Post = ({post, setAllData}) => {
 
     return (
 
-        <Col key={Date.now() * Math.random()}>
+        <Col>
             <Card style={{width: '18rem'}}>
-                <img src={post.imageField} style={{width: "100%", height: "200px"}}/>
+                <img src={post.imageField} style={{width: "100%", height: "200px"}} alt="Image Not Found"/>
                 <Card.Body>
                     <Form>
                         <Card.Text>
-                                <Form.Control
-                                    type={"text"}
-                                    name={"authorName"}
-                                    value={updateValue.authorName}
-                                    onChange={onChangeHandler}
-                                />
+                            <Form.Control
+                                type={"text"}
+                                name={"authorName"}
+                                value={updateValue.authorName}
+                                onChange={onChangeHandler}
+                            />
                         </Card.Text>
                         <Card.Text>
                             <Form.Control
+                                as={"textarea"}
                                 type="text"
                                 name={"postBody"}
                                 value={updateValue.postBody}
@@ -67,9 +61,10 @@ const Post = ({post, setAllData}) => {
                         <Card.Text>
                             Time: {post.timestamp}
                         </Card.Text>
+                        <Button variant="danger" onClick={() => deletePost(post.id)}>Delete</Button>
+                        <Button variant="warning" style={{marginLeft: "5rem"}} onClick={updatePost}>Update</Button>
                     </Form>
-                    <Button variant="danger" onClick={() => deletePost(post.id)}>Delete</Button>
-                    <Button variant="warning" style={{marginLeft: "5rem"}} onClick={updatePost}>Update</Button>
+
                 </Card.Body>
             </Card>
         </Col>

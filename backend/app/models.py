@@ -19,4 +19,4 @@ class Post(db.Model):
         }
 
     def __repr__(self):
-        return '<Post {}>'.format(self.timestamp)
+        return '<Post {}>'.format(self.authorName)
