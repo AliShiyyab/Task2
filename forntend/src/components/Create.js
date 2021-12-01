@@ -11,7 +11,7 @@ export default function Create({setAllData}) {
 
 
     const postData = async (e) => {
-        e.preventDefault()
+
         try {
             if (authorName.length > 0 && postBody.length > 0) {
                 const res = await axios.post('http://localhost:5000/add-post', {
@@ -23,7 +23,7 @@ export default function Create({setAllData}) {
                 setAllData(prev => [res.data.post, ...prev])
             }
             else{
-                alert("One of AuthorName or Post Body is Empty, Please check it.")
+                e.preventDefault()
             }
         } catch (e) {
             console.log(e)
@@ -32,7 +32,7 @@ export default function Create({setAllData}) {
 
     return (
         <div>
-            <Form onSubmit={postData}>
+            <Form onSubmit={postData} style={{marginTop: "20px"}}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Author Name: </Form.Label>
                     <Form.Control type="text" placeholder="Enter Your Name"
@@ -41,7 +41,7 @@ export default function Create({setAllData}) {
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Body</Form.Label>
-                    <Form.Control type="text" placeholder="Post Body"
+                    <Form.Control type="text" placeholder="Article Body"
                                   onChange={(even) => setPostBody(even.target.value)}/>
                 </Form.Group>
 
@@ -50,9 +50,11 @@ export default function Create({setAllData}) {
                     <Form.Control type="text" placeholder="Image Link"
                                   onChange={(even) => setImageField(even.target.value)}/>
                 </Form.Group>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
+                <Form.Group>
+                    <Button style={{marginLeft: "45%", marginBottom: "25px"}} variant="primary" type="submit">
+                        Submit
+                    </Button>
+                </Form.Group>
             </Form>
         </div>
     );

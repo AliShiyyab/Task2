@@ -37,7 +37,7 @@ const Post = ({post, setAllData}) => {
     return (
 
         <Col>
-            <Card style={{width: '18rem'}}>
+            <Card style={{width: '20rem', marginTop:"3%", marginBottom:"3%"}}  border="primary">
                 <img src={post.imageField} style={{width: "100%", height: "200px"}} alt="Image Not Found"/>
                 <Card.Body>
                     <Form>

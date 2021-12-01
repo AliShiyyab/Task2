@@ -3,6 +3,8 @@ import {Container} from "react-bootstrap";
 import Read from "./components/Read";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 function App() {
 
@@ -14,6 +16,7 @@ function App() {
             setAllData(res.data.posts)
             console.log(res.data)
         }
+
         getData()
     }, [])
 
@@ -23,10 +26,12 @@ function App() {
 
     return (
         <>
+            <Header/>
             <Container>
                 <Create setAllData={setAllData} allData={allData}/>
                 <Read setAllData={setAllData} allData={allData}/>
             </Container>
+            <Footer/>
         </>
     );
 }

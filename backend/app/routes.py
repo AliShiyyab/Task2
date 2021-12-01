@@ -21,9 +21,12 @@ def posts_shown():
 def add_post():
     data = request.get_json()
     new_post = Post(authorName=data["authorName"], postBody=data["postBody"], imageField=data["imageField"])
-    db.session.add(new_post)
-    db.session.commit()
-    return jsonify({"post": new_post.json()})
+    if len(new_post.authorName) > 0 or len(new_post.postBody) > 0:
+        db.session.add(new_post)
+        db.session.commit()
+        return jsonify({"post": new_post.json()})
+    else:
+        return ({"post": "One Of these fields is Empty"})
 
 
 @app.route("/delete_post/<int:id>", methods=['DELETE'])
