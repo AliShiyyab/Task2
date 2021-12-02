@@ -1,22 +1,33 @@
-import requests
-
 from app import app, db
 from flask_cors import cross_origin, CORS
 from app.models import Post
 from flask import jsonify, request
-from datetime import datetime
 
 cors = CORS(app)
 
+# Validate Post Data Function
 
-@app.route("/posts")
+
+def validate_post_data(data):
+    if 'authorName' != "" and 'postBody' != "" and 'imageField' != "":
+        return True
+    else:
+        return False
+
+# Routes
+
+
+@app.route("/posts", methods=['GET'])
 @cross_origin()
 def posts_shown():
     posts = Post.query.order_by(Post.timestamp.desc()).all()
-    return jsonify({"posts": [post.json() for post in posts]})
+    if validate_post_data(posts):
+        return jsonify({"posts": [post.json() for post in posts]})
+    else:
+        return jsonify({"error": "The data is empty"})
 
 
-@app.route("/add-post", methods=['POST'])
+@app.route("/posts", methods=['POST'])
 @cross_origin()
 def add_post():
     data = request.get_json()
@@ -26,10 +37,10 @@ def add_post():
         db.session.commit()
         return jsonify({"post": new_post.json()})
     else:
-        return ({"post": "One Of these fields is Empty"})
+        return jsonify({"post": "One Of these fields is Empty"})
 
 
-@app.route("/delete_post/<int:id>", methods=['DELETE'])
+@app.route("/posts/<int:id>", methods=['DELETE'])
 @cross_origin()
 def delete_post(id):
     post_to_delete = Post.query.get_or_404(id)
@@ -38,7 +49,7 @@ def delete_post(id):
     return jsonify({"messages": "Deleted Successfully"})
 
 
-@app.route("/update_post_author/<int:id>", methods=['PUT'])
+@app.route("/posts/<int:id>", methods=['PUT'])
 @cross_origin()
 def update_post(id):
     # post_to_update = Post.query.get_or_404(id)

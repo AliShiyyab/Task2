@@ -15,7 +15,7 @@ const Post = ({post, setAllData}) => {
     const deletePost = async (index) => {
         const id = index;
         try {
-            await axios.delete(`http://localhost:5000/delete_post/${id}`);
+            await axios.delete(`http://localhost:5000/posts/${id}`);
             setAllData(prev => prev.filter(p => p.id !== index))
         } catch (e) {
             console.log(e)
@@ -34,7 +34,7 @@ const Post = ({post, setAllData}) => {
     }
 
     const updatePost = async () => {
-        const res = await axios.put(`http://localhost:5000/update_post_author/${post.id}`, updateValue);
+        const res = await axios.put(`http://localhost:5000/posts/${post.id}`, updateValue);
         console.log(res.data)
     }
 
